@@ -37,6 +37,22 @@ export default StyleSheet.create({
     flexDirection: "row",
     padding: 10,
     justifyContent: "center"
+  },
+  surface: {
+    padding: 2,
+    height: 60,
+    flex: 1,
+    marginHorizontal: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  surfaceContainer: {
+    flexDirection: "row",
+    padding: 10,
+    justifyContent: "space-between"
+  },
+  surfaceContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
   }
-
 });

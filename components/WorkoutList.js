@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FAB, Modal, Portal, List, IconButton, Appbar, Dialog, Button } from "react-native-paper";
+import { FAB, Modal, Portal, List, IconButton, Appbar, Dialog, Button, Surface } from "react-native-paper";
 import { View, Text, Alert, ScrollView } from "react-native";
 import styles from "../style/styles";
 import AddWorkout from "./AddWorkout";
@@ -41,6 +41,13 @@ export default WorkoutList = () => {
     return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
   }
 
+/*   const sumExercise = (type) => {
+    const list = [...exercises];
+    list.map((exercise, index) => (
+
+    ))
+  } */
+
   return (
 
     <View style={{ flex: 1 }}>
@@ -63,9 +70,23 @@ export default WorkoutList = () => {
         </Dialog>
       </Portal>
 
+      <View style={styles.surfaceContainer}>
+        <Surface style={styles.surface} elevation={1}>
+          <View style={styles.surfaceContent}>
+          <MaterialCommunityIcons name="run" size={30} color="black" />
+          <Text>Surface</Text>
+          </View>          
+        </Surface>
+        <Surface style={styles.surface} elevation={1}>
+          <Text>Surface</Text>
+        </Surface>
+        <Surface style={styles.surface} elevation={1}>
+          <Text>Surface</Text>
+        </Surface>
+      </View>
+      
       <ScrollView>
         <List.Section>
-          {/* <List.Subheader>Exercises</List.Subheader> */}
           {exercises.map((exercise, index) => (
             <List.Item
               key={index.toString()}
