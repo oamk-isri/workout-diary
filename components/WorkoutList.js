@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FAB, Modal, Portal, List, IconButton, Appbar, Dialog, Button, Surface } from "react-native-paper";
+import { FAB, Modal, Portal, List, IconButton, Appbar, Dialog, Button, Surface, Divider } from "react-native-paper";
 import { View, Text, Alert, ScrollView } from "react-native";
 import styles from "../style/styles";
 import AddWorkout from "./AddWorkout";
@@ -123,6 +123,7 @@ export default WorkoutList = () => {
         <List.Section>
           {exercises.map((exercise, index) => (
             <List.Item
+              style={styles.listItem}
               key={index.toString()}
               title={
                 <View style={{ flexDirection: "row" }}>
