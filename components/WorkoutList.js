@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FAB, Modal, Portal, List, IconButton, Appbar, Dialog, Button, Surface, Divider } from "react-native-paper";
-import { View, Text, Alert, ScrollView } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import styles from "../style/styles";
 import AddWorkout from "./AddWorkout";
 import { getStorage, setStorage } from "./AsyncStorage";

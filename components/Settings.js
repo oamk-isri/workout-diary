@@ -1,7 +1,6 @@
-import React, { useState, useContext } from "react";
-import { View, Text } from "react-native";
+import React, { useContext } from "react";
+import { View } from "react-native";
 import { RadioButton } from "react-native-paper";
-import styles from "../style/styles";
 import { SettingsContext } from "./Contexts";
 
 export default Settings = () => {
