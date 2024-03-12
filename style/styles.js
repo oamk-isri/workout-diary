@@ -58,5 +58,8 @@ export default StyleSheet.create({
   surfaceContent: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  surfaceText: {
+    paddingLeft: 2
   }
 });

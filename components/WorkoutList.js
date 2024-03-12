@@ -41,12 +41,16 @@ export default WorkoutList = () => {
     return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
   }
 
-/*   const sumExercise = (type) => {
+  const sumExercise = (type) => {
     const list = [...exercises];
-    list.map((exercise, index) => (
 
-    ))
-  } */
+    const distances = list
+      .filter(exercise => exercise.exercise === type)
+      .map(exercise => parseFloat(exercise.distance));
+
+    const sum = distances.reduce((total, distance) => total + distance, 0);
+    return sum;
+  }
 
   return (
 
@@ -74,19 +78,43 @@ export default WorkoutList = () => {
         <Surface mode="flat" style={styles.surface} elevation={1}>
           <View style={styles.surfaceContent}>
             <MaterialCommunityIcons name="run" size={30} color="black" />
-            <Text>Surface</Text>
+            {isMiles ? (
+              <Text style={styles.surfaceText}>
+                {(sumExercise("run") * KM_TO_MI_MULT).toFixed(1)} mi
+              </Text>
+            ) : (
+              <Text style={styles.surfaceText}>
+                {sumExercise("run").toFixed(1)} km
+              </Text>
+            )}
           </View>          
         </Surface>
         <Surface mode="flat" style={styles.surface} elevation={1}>
           <View style={styles.surfaceContent}>
             <MaterialCommunityIcons name="bike" size={30} color="black" />
-            <Text>Surface</Text>
+            {isMiles ? (
+              <Text style={styles.surfaceText}>
+                {(sumExercise("bike") * KM_TO_MI_MULT).toFixed(1)} mi
+              </Text>
+            ) : (
+              <Text style={styles.surfaceText}>
+                {sumExercise("bike").toFixed(1)} km
+              </Text>
+            )}
           </View>   
         </Surface>
         <Surface mode="flat" style={styles.surface} elevation={1}>
           <View style={styles.surfaceContent}>
             <MaterialCommunityIcons name="swim" size={30} color="black" />
-            <Text>Surface</Text>
+            {isMiles ? (
+              <Text style={styles.surfaceText}>
+                {(sumExercise("swim") * KM_TO_MI_MULT).toFixed(1)} mi
+              </Text>
+            ) : (
+              <Text style={styles.surfaceText}>
+                {sumExercise("swim").toFixed(1)} km
+              </Text>
+            )}
           </View>   
         </Surface>
       </View>
