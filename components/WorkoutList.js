@@ -41,10 +41,6 @@ export default WorkoutList = () => {
     return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
   }
 
-  const formatDuration = (duration) => {
-    
-  }
-
   return (
 
     <View style={{ flex: 1 }}>
