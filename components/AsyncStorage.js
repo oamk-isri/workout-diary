@@ -1,32 +1,23 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Alert } from "react-native";
 
-export const saveExercise = async (exercise) => {
+const setStorage = async (data) => {
     try {
-        let exercises = await AsyncStorage.getItem('exercises');
-        exercises = exercises ? JSON.parse(exercises) : [];
-        exercises.push(exercise);
-        await AsyncStorage.setItem('exercises', JSON.stringify(exercise));
+        await AsyncStorage.setItem('exercises', JSON.stringify(data));
+
     } catch (error) {
-        console.error('Error saving exercise:', error);
+        console.error("Error setting data to AsyncStorage:", error);
     }
-};
+}
 
-export const getExercises = async () => {
+const getStorage = async () => {
     try {
-        const exercises = await AsyncStorage.getItem('exercises');
-        return /* exercises ? JSON.parse(exercises) : */ [];
+        const data = await AsyncStorage.getItem('exercises');
+        return data ? JSON.parse(data) : [];
+
     } catch (error) {
-        console.error('Error getting exercises:', error);
+        console.error("Error getting data from AsyncStorage:", error);
         return [];
     }
-};
+}
 
-export const clearExercises = async () => {
-    try {
-        await AsyncStorage.removeItem('exercises');
-        console.log('Exercises cleared successfully');
-    } catch (error) {
-        console.error('Error clearing exercises:', error);
-    }
-};
+export {setStorage, getStorage}

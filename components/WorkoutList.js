@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { FAB, Modal, Portal, List, IconButton } from "react-native-paper";
-import { View } from "react-native";
+import { View, Text, Alert } from "react-native";
 import styles from "../style/styles";
 import AddWorkout from "./AddWorkout";
-import { getExercises, saveExercise, clearExercises } from "./AsyncStorage";
-
+import { getStorage, setStorage } from "./AsyncStorage";
+import { ExercisesContext } from "./Contexts";
 
 export default Header = () => {
-
 
     const [exercises, setExercises] = useState([]);
 
@@ -16,45 +15,20 @@ export default Header = () => {
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
 
+    const removeExercise = (index) => {
+        const updatedExercises = [...exercises];
+        updatedExercises.splice(index, 1);
+        setExercises(updatedExercises);
+        setStorage(updatedExercises);
+    };
+
     useEffect(() => {
-        // Fetch exercises when the component mounts
-        fetchExercises();
-    }, []);
-
-    const fetchExercises = async () => {
-        try {
-            const exerciseData = await getExercises();
-            setExercises(exerciseData);
-        } catch (error) {
-            console.error('Error fetching exercises:', error);
-        }
-    };
-
-    const removeAll = async () => {
-        try {
-            await clearExercises();
-            setExercises([]);
-        } catch {
-            console.error("error:", error);
-        }
-    }
-
-    const removeExercise = async (index) => {
-        try {
-            const updatedExercises = [...exercises];
-            updatedExercises.splice(index, 1);
-            setExercises(updatedExercises);
-            await saveExercise(updatedExercises); // Save updated list to AsyncStorage
-        } catch (error) {
-            console.error('Error removing exercise:', error);
-        }
-    };
+        getStorage().then(setExercises);
+    }, [])
 
     return (
         
         <View style={{ flex: 1}}>
-
-            
             <List.Section>
                 <List.Subheader>Exercises</List.Subheader>
                 {exercises.map((exercise, index) => (
@@ -67,33 +41,24 @@ export default Header = () => {
                         right={() => (
                             <IconButton
                             icon="delete"
-                            onPress={() => removeExercise(index)}
+                            onPress={() => removeExercise(index) }
                             />
                         )}
                     />
                 ))}
             </List.Section>
-            
 
             <Portal>
                 <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.modal}>
-                    <AddWorkout />
+                   <ExercisesContext.Provider value={{exercises, setExercises}}>
+                   <    AddWorkout />
+                   </ExercisesContext.Provider>
                 </Modal>
             </Portal>
             <FAB
             icon="plus"
             style={styles.fab}
             onPress={showModal}
-            />
-            <FAB
-            icon="delete"
-            style={styles.delete}
-            onPress={removeAll}
-            />
-            <FAB
-            icon="reload"
-            style={styles.reload}
-            onPress={fetchExercises}
             />
         </View>
         
