@@ -11,12 +11,6 @@ export default StyleSheet.create({
     right: 24,
     bottom: 24,
   },
-  delete: {
-    position: 'absolute',
-    margin: 0,
-    right: 124,
-    bottom: 24,
-  },
   reload: {
     position: 'absolute',
     margin: 0,
@@ -31,9 +25,18 @@ export default StyleSheet.create({
     fontSize: 25,
     marginBottom: 20,
   },
+  titleSmall: {
+    fontSize: 20,
+    paddingLeft: 10
+  },
   datePicker: {
     marginTop: 28,
     marginBottom: 55,
+  },
+  listDescription: {
+    flexDirection: "row",
+    padding: 10,
+    justifyContent: "center"
   }
 
 });

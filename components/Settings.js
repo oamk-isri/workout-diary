@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import { View, Text } from "react-native";
+import { RadioButton } from "react-native-paper";
 import styles from "../style/styles";
+import { SettingsContext } from "./Contexts";
 
-export default Header = () => {
+export default Settings = () => {
 
-    const [example, setExample] = useState("");
+  const { isMiles, setIsMiles } = useContext(SettingsContext);
 
-    return (
-        <View style={styles.container}>
-            <Text>Placeholder</Text>
-        </View>
-    )
+  return (
+    <View>
+      <RadioButton.Group onValueChange={isMiles => setIsMiles(isMiles)} value={isMiles}>
+        <RadioButton.Item label="Kilometers" value={false} />
+        <RadioButton.Item label="Miles" value={true} />
+      </RadioButton.Group>
+    </View>
+  )
 }
