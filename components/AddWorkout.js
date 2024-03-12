@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { Text, TextInput, SegmentedButtons, Button } from "react-native-paper";
 import styles from "../style/styles";
 import { DatePickerInput, enGB, registerTranslation } from "react-native-paper-dates";
@@ -11,7 +11,7 @@ import { MI_TO_KM_MULT } from "../constants/Diary";
 
 export default AddWorkout = () => {
 
-  const [exercise, setExercise] = useState("");
+  const [exercise, setExercise] = useState("run");
   const [distance, setDistance] = useState("");
   const [duration, setDuration] = useState("");
   const [inputDate, setInputDate] = useState(undefined);
@@ -28,19 +28,33 @@ export default AddWorkout = () => {
 
   const handleWorkout = (index) => {
     const updatedExercises = [...exercises];
-    console.log(index)
-    updatedExercises.push(index)
-    console.log(updatedExercises)
+    console.log(index);
+    updatedExercises.push(index);
+    console.log(updatedExercises);
     setExercises(updatedExercises);
-    setStorage(updatedExercises)
+    setStorage(updatedExercises);
   }
 
   const handleDistance = (distance) => {
-    if (isMiles) {
-      setDistance(Number(distance) * MI_TO_KM_MULT)
-    } else {
-      setDistance(distance)
+    if (distance < 0 || distance.includes("-")) {
+      Alert.alert("Distance cannot be negative!");
+      return
     }
+
+    if (isMiles) {
+      setDistance(Number(distance) * MI_TO_KM_MULT);
+    } else {
+      setDistance(distance);
+    }
+  }
+
+  const handleDuration = (duration) => {
+    if (duration < 0 || duration.includes("-")) {
+      Alert.alert("Duration cannot be negative!");
+      return
+    }
+    
+    setDuration(duration)
   }
 
   return (
@@ -50,9 +64,9 @@ export default AddWorkout = () => {
         value={exercise}
         onValueChange={setExercise}
         buttons={[
-          { value: 'run', label: 'Running' },
-          { value: 'bike', label: 'Biking' },
-          { value: 'swim', label: 'Swimming' }
+          { value: "run", label: "Running" },
+          { value: "bike", label: "Biking" },
+          { value: "swim", label: "Swimming" }
         ]}
       />
 
@@ -68,7 +82,7 @@ export default AddWorkout = () => {
         mode="outlined"
         label="Duration (Minutes)"
         value={duration}
-        onChangeText={duration => setDuration(duration)}
+        onChangeText={duration => handleDuration(duration)}
         keyboardType="numeric"
         returnKeyType="done"
       />
