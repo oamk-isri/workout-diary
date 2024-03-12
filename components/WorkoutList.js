@@ -4,7 +4,7 @@ import { View, Text, Alert, ScrollView } from "react-native";
 import styles from "../style/styles";
 import AddWorkout from "./AddWorkout";
 import { getStorage, setStorage } from "./AsyncStorage";
-import { ExercisesContext, SettingsContext } from "./Contexts";
+import { ExercisesContext, SettingsContext, ModalContext } from "./Contexts";
 import Settings from "./Settings";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { KM_TO_MI_MULT } from "../constants/Diary";
@@ -71,17 +71,23 @@ export default WorkoutList = () => {
       </Portal>
 
       <View style={styles.surfaceContainer}>
-        <Surface style={styles.surface} elevation={1}>
+        <Surface mode="flat" style={styles.surface} elevation={1}>
           <View style={styles.surfaceContent}>
-          <MaterialCommunityIcons name="run" size={30} color="black" />
-          <Text>Surface</Text>
+            <MaterialCommunityIcons name="run" size={30} color="black" />
+            <Text>Surface</Text>
           </View>          
         </Surface>
-        <Surface style={styles.surface} elevation={1}>
-          <Text>Surface</Text>
+        <Surface mode="flat" style={styles.surface} elevation={1}>
+          <View style={styles.surfaceContent}>
+            <MaterialCommunityIcons name="bike" size={30} color="black" />
+            <Text>Surface</Text>
+          </View>   
         </Surface>
-        <Surface style={styles.surface} elevation={1}>
-          <Text>Surface</Text>
+        <Surface mode="flat" style={styles.surface} elevation={1}>
+          <View style={styles.surfaceContent}>
+            <MaterialCommunityIcons name="swim" size={30} color="black" />
+            <Text>Surface</Text>
+          </View>   
         </Surface>
       </View>
       
@@ -99,14 +105,14 @@ export default WorkoutList = () => {
               description={
                 <View style={styles.listDescription}>
                   <View style={styles.listDescription}>
-                    <MaterialCommunityIcons name="map-marker-distance" size={30} color="black" />
+                    <MaterialCommunityIcons name="map-marker-distance" size={20} color="black" />
                     
                     {isMiles ? (
-                      <Text style={styles.titleSmall}>
+                      <Text style={styles.titleSmaller}>
                         {(Number(exercise.distance * KM_TO_MI_MULT).toFixed(2)).toString()} mi
                       </Text>
                     ) : (
-                      <Text style={styles.titleSmall}>
+                      <Text style={styles.titleSmaller}>
                         {(Number(exercise.distance).toFixed(2)).toString()} km
                       </Text>
                     )}
@@ -114,8 +120,8 @@ export default WorkoutList = () => {
                   </View>
 
                   <View style={styles.listDescription}>
-                    <MaterialCommunityIcons name="clock-outline" size={30} color="black" />
-                    <Text style={styles.titleSmall}>{exercise.duration} min</Text>
+                    <MaterialCommunityIcons name="clock-outline" size={20} color="black" />
+                    <Text style={styles.titleSmaller}>{exercise.duration} min</Text>
                   </View>
                 </View>
               }
@@ -131,6 +137,7 @@ export default WorkoutList = () => {
       </ScrollView>
 
       <Portal>
+        <ModalContext.Provider value={{modalToggle, setModalToggle}}>
         <Modal visible={modalToggle} onDismiss={hideModal} contentContainerStyle={styles.modal}>
           <ExercisesContext.Provider value={{ exercises, setExercises }}>
             <SettingsContext.Provider value={{ isMiles, setIsMiles }}>
@@ -138,21 +145,13 @@ export default WorkoutList = () => {
             </SettingsContext.Provider>
           </ExercisesContext.Provider>
         </Modal>
+        </ModalContext.Provider>
       </Portal>
       <FAB
         icon="plus"
         style={styles.fab}
         onPress={showModal}
       />
-
-      <View style={styles.reload}>
-        {isMiles ? (
-          <Text>Miles: true</Text>
-        ) : (
-          <Text>Miles: false</Text>
-        )}
-      </View>
     </View>
-
   )
 }

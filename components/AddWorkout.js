@@ -5,7 +5,7 @@ import styles from "../style/styles";
 import { DatePickerInput, enGB, registerTranslation } from "react-native-paper-dates";
 registerTranslation('en-GB', enGB)
 
-import { ExercisesContext, SettingsContext } from "./Contexts";
+import { ExercisesContext, ModalContext, SettingsContext } from "./Contexts";
 import { setStorage } from "./AsyncStorage";
 import { MI_TO_KM_MULT } from "../constants/Diary";
 
@@ -18,6 +18,7 @@ export default AddWorkout = () => {
 
   const { exercises, setExercises } = useContext(ExercisesContext);
   const { isMiles, setIsMiles } = useContext(SettingsContext);
+  const { modalToggle, setModalToggle} = useContext(ModalContext);
 
   const ExerciseItem = {
     exercise: exercise,
@@ -28,29 +29,32 @@ export default AddWorkout = () => {
 
   const handleWorkout = (index) => {
     const updatedExercises = [...exercises];
-    console.log(index);
     updatedExercises.push(index);
-    console.log(updatedExercises);
     setExercises(updatedExercises);
     setStorage(updatedExercises);
+    setModalToggle(false);
   }
 
   const handleDistance = (distance) => {
-    if (distance < 0 || distance.includes("-")) {
-      Alert.alert("Distance cannot be negative!");
+    // regex, only numbers and decimals
+    if (distance < 0 || !/^\d*\.?\d*$/.test(distance)) {
+      Alert.alert("Invalid input!");
       return
     }
 
     if (isMiles) {
-      setDistance(Number(distance) * MI_TO_KM_MULT);
+      let num = distance * MI_TO_KM_MULT
+      num.toString()
+      setDistance(num);
     } else {
       setDistance(distance);
     }
   }
 
   const handleDuration = (duration) => {
-    if (duration < 0 || duration.includes("-")) {
-      Alert.alert("Duration cannot be negative!");
+    // regex, only numbers and decimals
+    if (duration < 0 || !/^\d*\.?\d*$/.test(duration)) {
+      Alert.alert("Invalid input!");
       return
     }
     

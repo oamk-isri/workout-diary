@@ -29,6 +29,10 @@ export default StyleSheet.create({
     fontSize: 20,
     paddingLeft: 10
   },
+  titleSmaller: {
+    fontSize: 16,
+    paddingLeft: 10
+  },
   datePicker: {
     marginTop: 28,
     marginBottom: 55,
@@ -36,7 +40,7 @@ export default StyleSheet.create({
   listDescription: {
     flexDirection: "row",
     padding: 10,
-    justifyContent: "center"
+    justifyContent: "space-between"
   },
   surface: {
     padding: 2,
